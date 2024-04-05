@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+          <p:growl life="4000"/>
+          
+          <h:form id="formCadeiraEdit">
+            <p:fieldset legend="Editar Cadeira">
+                
+                <p:panelGrid columns="3">
+                    <h:outputText value="Código:"/>
+                    <h:outputText value="#{cadeiraController.select.codigo}"/>
+                    <h:outputText />
+                    
+                    <h:outputText value="Nome:"/>
+                    <p:inputText value="#{cadeiraController.select.nome}"
+                                 required="true" requiredMessage="O NOME é obrigatório"
+                                 id="txtNome"/>
+                    <p:message for="txtNome"/>
+                    
+                    <h:outputText value="Ano"/>
+                    <p:inputText value="#{cadeiraController.select.ano}"
+                                  required="true" requiredMessage="O Ano é obrigatório"
+                                 id="txtAno"/>
+                    <p:message for="txtAno"/>
+                    
+                    <h:outputText value="Semestre"/>
+                    <p:inputText value="#{cadeiraController.select.semestre}"
+                                  required="true" requiredMessage="O Semestre é obrigatório"
+                                 id="txtSemestre"/>
+                    <p:message for="txtSemestre"/>
+                 
+                    <h:outputText/>
+                    <h:outputText/>
+                    <h:outputText/>
+                    
+                    <h:outputText value="Descricao"/>
+                    <p:editor value="#{cadeiraController.select.descricao}"
+                              id="edtDesc"/>
+                    <p:message for="edtDesc"/>
+                </p:panelGrid>
+                
+                <p:commandButton value="editar" 
+                                 oncomplete="PF('widDialCadastro').show()"/>
+                
+                <p:commandButton value="Sair" action='ListadeCadeiras' />
+                
+            </p:fieldset>
+                
+                
+              <p:dialog id="dialCadastro" 
+                      visible="false" closeOnEscape="true"
+                      closable="true" resizable="false" draggable="false"
+                      modal="true" hideEffect="explode" widgetVar="widDialCadastro">
+                
+                <h5>Deseja editar esta cadeira?</h5>
+                <p:commandButton value="sim" 
+                                 action="#{cadeiraController.editar()}" 
+                                 oncomplete="PF('widDialCadastro').hide()" update='@form'/>
+                <p:commandButton value="não" oncomplete="PF('widDialCadastro').hide()"/>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+

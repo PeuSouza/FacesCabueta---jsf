@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lista de Cadeiras</title>
+    </h:head>
+    <h:body>
+        
+     <p:growl id="gro" life="4000"/>
+        
+      <h:form id="formListaCadeiras">
+            
+          <p:dataTable id="tblCadeiras" value="#{cadeiraController.getAllCadeiras()}" 
+                         var="cad" paginator="true" rows="6" rowKey="#{cad.codigo}"
+                         selection="#{cadeiraController.select}" selectionMode="single">
+              
+             <f:facet name="header">
+                    Tabela de Cadeiras
+             </f:facet>
+                
+                <p:column headerText="Código" sortBy="#{cad.codigo}">
+                    #{cad.codigo}
+                </p:column>
+             
+                <p:column filterBy="#{cad.nome}">
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>
+                    #{cad.nome}
+                </p:column>
+             
+                <p:column headerText="Ano">
+                    #{cad.ano}
+                </p:column>
+             
+             
+                <p:column headerText="Semestre">
+                    #{cad.semestre}
+                </p:column>
+             
+             
+                <p:column headerText="descricao">
+                    #{cad.descricao}
+                </p:column>
+             
+            </p:dataTable>
+            
+            <p:commandButton value="detalhar" oncomplete="PF('widDialDetalhe').show()"
+                             update='dialDetalhe'/>
+            
+            <p:commandButton value="Editar" action='EditarCadeira'/>
+            
+            <p:commandButton value="Delete" oncomplete="PF('widDialDelete').show()"/>
+            
+            <p:dialog id="dialDetalhe" visible="false" modal="true" header="Detalhe da Cadeira"
+                      widgetVar="widDialDetalhe">
+                
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código:"/>
+                    <h:outputText value="#{cadeiraController.select.codigo}"/>
+                    
+                    <h:outputText value="Nome:"/>
+                    <h:outputText value="#{cadeiraController.select.nome}"/>
+                    
+                    <h:outputText value="Ano"/>
+                    <h:outputText value="#{cadeiraController.select.ano}"/>
+                    
+                    <h:outputText value="Semestre"/>
+                    <h:outputText value="#{cadeiraController.select.semestre}"/>
+                    
+                    <h:outputText value="Descricao"/>
+                    <h:outputText value="#{cadeiraController.select.descricao}"/>
+                </p:panelGrid>
+                  
+            </p:dialog>
+            
+            
+            <p:dialog id="dialDelete" visible="false" modal="true" header="informações"
+                widgetVar="widDialDelete">
+                <h:outputText value="Deseja deletar essa cadeira?"/><br/>
+            
+                <p:commandButton value="sim" action="#{cadeiraController.delete()}"
+                                 oncomplete="PF('widDialDelete).hide()'"
+                                 update=':formListaCadeiras:tblCadeiras :gro'/>
+                <p:commandButton value="não" oncomplete="PF('widDialDelete).hide()'"/>
+                
+            </p:dialog>
+            
+            
+            
+    
+        </h:form>
+        
+    </h:body>
+</html>
+

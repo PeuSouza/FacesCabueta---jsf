@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro dos metodos de fila </title>
+    </h:head>
+    <h:body>
+        <p:growl id="gro" life="4000"/>
+        
+        <h:form id="formMetodoFila">
+            <p:fieldset legend= "Cadastro dos Metodos de fila">
+                 <p:panelGrid columns="3">
+                     
+                    <h:outputText value="Descrição Curta:"/>
+                    <p:inputText value="#{metodoFilaController.cadastro.descricaoCurta}"
+                    id="txtSoftDesc"/>
+                    <p:message for="txtSoftDesc"/>
+                    
+                    <h:outputText value="Descrição Longa"/>
+                    <p:inputText value="#{metodoFilaController.cadastro.descricaoLonga}"
+                    id="txtLongDesc"/>
+                    <p:message for="txtLongDesc"/>
+                    
+                    
+               <p:commandButton value="cadastrar"
+                                  oncomplete="PF('widDialCadastro').show()" />
+               <p:commandButton value="cancelar" 
+                                action="#{cadeiraController.limparDados()}"/>
+                 </p:panelGrid>
+            </p:fieldset>
+            
+            <p:dialog id="dialCadastro" 
+                      visible="false" closeOnEscape="true"
+                      closable="true" resizable="false" draggable="false"
+                      modal="true" hideEffect="explode" widgetVar="widDialCadastro">
+                
+                <h5>Deseja cadastrar este método de Fila ?</h5>
+                <p:commandButton value="sim" 
+                                 action="#{metodoFilaController.cadastrar()}"/>
+                <p:commandButton value="não" oncomplete="PF('widDialCadastro').hide()"/>
+            </p:dialog>
+
+        </h:form>
+    </h:body>
+</html>
+

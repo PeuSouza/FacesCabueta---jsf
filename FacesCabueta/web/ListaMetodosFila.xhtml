@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lista de metodos de fila</title>
+    </h:head>
+    <h:body>
+         <p:growl id="gro" life="4000"/>
+        
+        <h:form id="formMetodoFila">
+            
+            <p:dataTable id="tblMetodoFila" value="#{metodoFilaController.getAllMetodosdefila()}" 
+                         var="m" paginator="true" rows="6" rowKey="#{m.codigo}"
+                         selection="#{metodoFilaController.select}" selectionMode="single">
+                <f:facet name="header">
+                    Tabela de Metodos de Fila
+                </f:facet>
+                <p:column headerText="Código" sortBy="#{m.codigo}">
+                    #{m.codigo}
+                </p:column>
+                <p:column headerText="Descricao Curta">
+                    #{m.descricaoCurta}
+                </p:column>
+                <p:column headerText="Descrição Longa">
+                    #{m.descricaoLonga}
+                </p:column>
+                
+            </p:dataTable>
+            
+            <p:commandButton value="detalhar" oncomplete="PF('widDialDetalhe').show()"
+                             update='dialDetalhe'/>
+            <p:commandButton value="Editar" action='EditMetodoFila'/>
+            <p:commandButton value="delete" oncomplete="PF('widDialDelete').show()"/>
+            
+            <p:dialog id="dialDetalhe" visible="false" modal="true" header="Detalhe o metodo de fila"
+                      widgetVar="widDialDetalhe">
+                
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código:"/>
+                    <h:outputText value="#{metodoFilaController.select.codigo}"/>
+                    
+                    <h:outputText value="Descrição curta:"/>
+                    <h:outputText value="#{metodoFilaController.select.descricaoCurta}"/>
+                    
+                    <h:outputText value="Descrição Longa"/>
+                    <h:outputText value="#{metodoFilaController.select.descricaoLonga}"/> 
+                   
+                </p:panelGrid>
+                
+            </p:dialog>
+            
+            <p:dialog id="dialDelete" visible="false" modal="true" header="Informações"
+                widgetVar="widDialDelete">
+                <h:outputText value="Deseja deletar este metodo?"/><br/>
+                <p:commandButton value="sim" action="#{metodoFilaController.delete()}"
+                                 oncomplete="PF('widDialDelete).hide()'"
+                                 update=':formMetodoFila:tblMetodoFila :gro'/>
+                <p:commandButton value="não" oncomplete="PF('widDialDelete).hide()'"/>
+            </p:dialog>
+            
+        </h:form>
+       
+    </h:body>
+</html>
+
